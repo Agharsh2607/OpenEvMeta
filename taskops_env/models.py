@@ -31,3 +31,4 @@ class State:
     current_day: int = 1
     backlog: List[Ticket] = field(default_factory=list)
     total_reward: float = 0.0
+    capacity_remaining: int = 12

@@ -8,6 +8,7 @@ class TaskOpsEnvironment:
         self._state = State()
         self._done = False
         self._last_reward = 0.0
+        self._state.capacity_remaining = 12
         
     def _generate_tickets(self):
         num_new = random.randint(2, 6)
@@ -25,6 +26,7 @@ class TaskOpsEnvironment:
         self._state = State()
         self._done = False
         self._last_reward = 0.0
+        self._state.capacity_remaining = 12
         self._generate_tickets()
         return self._get_observation()
         
@@ -34,7 +36,8 @@ class TaskOpsEnvironment:
             
         reward = 0.0
         if action.action_type == "resolve":
-            if self._state.backlog:
+            if self._state.backlog and self._state.capacity_remaining > 0:
+                self._state.capacity_remaining -= 1
                 if random.random() < 0.8:
                     self._state.backlog.pop(0)
                     reward = 10.0
@@ -47,6 +50,8 @@ class TaskOpsEnvironment:
                 reward = -5.0
         elif action.action_type == "advance_day":
             self._state.current_day += 1
+            self._state.capacity_remaining = 12
+            self._generate_tickets()
             reward = -2.0
             if self._state.current_day > 30:
                 self._done = True
