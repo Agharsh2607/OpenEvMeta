@@ -14,10 +14,17 @@ class Action:
     action_type: Literal["assign", "resolve", "escalate", "defer", "advance_day"]
 
 @dataclass
+class TicketSummary:
+    id: str
+    priority: str
+
+@dataclass
 class Observation:
     current_day: int
     done: bool
     reward: float
+    backlog_size: int
+    top_tickets: List[TicketSummary]
 
 @dataclass
 class State:

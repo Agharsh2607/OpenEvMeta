@@ -1,7 +1,7 @@
 import dataclasses
 import random
 import uuid
-from models import State, Observation, Ticket, Action
+from models import State, Observation, Ticket, Action, TicketSummary
 
 class TaskOpsEnvironment:
     def __init__(self):
@@ -56,9 +56,12 @@ class TaskOpsEnvironment:
         return self._get_observation()
         
     def _get_observation(self) -> dict:
+        top_tickets = [TicketSummary(id=t.id, priority=t.priority) for t in self._state.backlog[:3]]
         obs = Observation(
             current_day=self._state.current_day,
             done=self._done,
-            reward=self._last_reward
+            reward=self._last_reward,
+            backlog_size=len(self._state.backlog),
+            top_tickets=top_tickets
         )
         return dataclasses.asdict(obs)
