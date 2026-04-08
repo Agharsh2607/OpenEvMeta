@@ -1,0 +1,6 @@
+name: taskops-env
+description: "Customer Support Ticket Triage system"
+version: "1.0.0"
+entrypoint: environment:TaskOpsEnvironment
+tasks_dir: tasks
+graders_dir: graders

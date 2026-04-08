@@ -1,11 +1,7 @@
-import sys
-import os
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import Optional
-from server.environment import TaskOpsEnvironment
+from environment import TaskOpsEnvironment
 from models import Action
 
 app = FastAPI(title="TaskOps Support Environment", version="1.0.0")
