@@ -3,7 +3,15 @@ import random
 import uuid
 from models import State, Observation, Ticket, Action, TicketSummary
 
-class TaskOpsEnvironment:
+from typing import Dict, Any
+
+class Environment:
+    def reset(self) -> Dict[str, Any]:
+        raise NotImplementedError
+    def step(self, action: Action) -> Dict[str, Any]:
+        raise NotImplementedError
+
+class TaskOpsEnvironment(Environment):
     def __init__(self):
         self._state = State()
         self._done = False
