@@ -1,5 +1,13 @@
 from dataclasses import dataclass, field
-from typing import Literal
+from typing import Literal, List
+
+@dataclass
+class Ticket:
+    id: str
+    priority: Literal["low", "medium", "high", "critical"]
+    customer_tier: Literal["free", "pro", "enterprise"]
+    estimated_effort: int
+    sla_deadline: int
 
 @dataclass
 class Action:
@@ -13,3 +21,4 @@ class Observation:
 @dataclass
 class State:
     current_day: int = 1
+    backlog: List[Ticket] = field(default_factory=list)
