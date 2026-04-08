@@ -1,7 +1,30 @@
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from fastapi import FastAPI
+from pydantic import BaseModel
+from typing import Optional
+from server.environment import TaskOpsEnvironment
+from models import Action
 
 app = FastAPI(title="TaskOps Support Environment", version="1.0.0")
+env = TaskOpsEnvironment()
 
-@app.get("/")
-def read_root():
-    return {"status": "ok", "message": "TaskOps Environment API is running"}
+class ActionRequest(BaseModel):
+    action_type: str
+    ticket_id: Optional[str] = None
+
+@app.post("/reset")
+def reset_environment():
+    return env.reset()
+
+@app.post("/step")
+def step_environment(action: ActionRequest):
+    env_action = Action(action_type=action.action_type) # type: ignore
+    return env.step(env_action)
+
+@app.get("/state")
+def get_state():
+    import dataclasses
+    return dataclasses.asdict(env._state)
