@@ -13,7 +13,7 @@ class ActionRequest(BaseModel):
     ticket_id: Optional[str] = None
 
 @app.post("/reset")
-def reset_environment():
+def reset_environment(body: dict | None = None):
     return env.reset()
 
 @app.post("/step")
