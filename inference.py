@@ -4,7 +4,7 @@ import time
 from openai import OpenAI
 import json
 
-API_BASE_URL = os.environ.get("API_BASE_URL", "http://127.0.0.1:8000")
+API_BASE_URL = os.environ.get("API_BASE_URL", "http://127.0.0.1:7860")
 MODEL_NAME = os.environ.get("MODEL_NAME", "gpt-3.5-turbo")
 HF_TOKEN = os.environ.get("HF_TOKEN") # Will be available per requirement
 
