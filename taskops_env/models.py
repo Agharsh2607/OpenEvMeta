@@ -17,8 +17,10 @@ class Action:
 class Observation:
     current_day: int
     done: bool
+    reward: float
 
 @dataclass
 class State:
     current_day: int = 1
     backlog: List[Ticket] = field(default_factory=list)
+    total_reward: float = 0.0
