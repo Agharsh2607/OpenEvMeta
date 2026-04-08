@@ -35,8 +35,16 @@ class TaskOpsEnvironment:
         reward = 0.0
         if action.action_type == "resolve":
             if self._state.backlog:
-                self._state.backlog.pop(0)
-                reward = 10.0
+                if random.random() < 0.8:
+                    self._state.backlog.pop(0)
+                    reward = 10.0
+                else:
+                    reward = -1.0
+        elif action.action_type == "escalate":
+            if self._state.backlog:
+                ticket = self._state.backlog[0]
+                ticket.sla_deadline += 3
+                reward = -5.0
         elif action.action_type == "advance_day":
             self._state.current_day += 1
             reward = -2.0
