@@ -32,3 +32,4 @@ class State:
     backlog: List[Ticket] = field(default_factory=list)
     total_reward: float = 0.0
     capacity_remaining: int = 12
+    history_log: List[str] = field(default_factory=list)

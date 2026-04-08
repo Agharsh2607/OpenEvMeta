@@ -39,6 +39,8 @@ class TaskOpsEnvironment(Environment):
         return self._get_observation()
         
     def step(self, action: Action) -> dict:
+        event_msg = f"Executing action: {action.action_type}"
+        self._state.history_log.append(event_msg)
         if self._done:
             return self._get_observation()
             
