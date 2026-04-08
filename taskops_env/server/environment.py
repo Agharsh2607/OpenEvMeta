@@ -1,7 +1,7 @@
 import dataclasses
 import random
 import uuid
-from models import State, Observation, Ticket
+from models import State, Observation, Ticket, Action
 
 class TaskOpsEnvironment:
     def __init__(self):
@@ -24,6 +24,20 @@ class TaskOpsEnvironment:
         self._state = State()
         self._done = False
         self._generate_tickets()
+        return self._get_observation()
+        
+    def step(self, action: Action) -> dict:
+        if self._done:
+            return self._get_observation()
+            
+        if action.action_type == "resolve":
+            if self._state.backlog:
+                self._state.backlog.pop(0)
+        elif action.action_type == "advance_day":
+            self._state.current_day += 1
+            if self._state.current_day > 30:
+                self._done = True
+                
         return self._get_observation()
         
     def _get_observation(self) -> dict:
